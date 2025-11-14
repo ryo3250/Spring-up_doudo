@@ -2,27 +2,23 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    [SerializeField] private GameObject goalUI;  // ÉSÅ[ÉãUI
-    [SerializeField] private GameObject gameUI;  // í èÌÉQÅ[ÉÄUI
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (!collision.gameObject.CompareTag("Player")) return;
+
+        int currentHit = Game_Manager.Instance.GetHitCount();
+        int maxHit = Game_Manager.Instance.GetMaxHitCount();
+
+        if (currentHit < maxHit)
         {
-            Debug.Log("ÉSÅ[ÉãÅI");
-
-            // ÉQÅ[ÉÄëSëÃÇàÍéûí‚é~
-            Time.timeScale = 0f;  // éûä‘Çí‚é~
-
-            // UIêÿÇËë÷Ç¶
-            if (gameUI != null) gameUI.SetActive(false);
-            if (goalUI != null) goalUI.SetActive(true);
+            Game_Manager.Instance.GameOver();
+            return;
         }
-    }
 
-    // ÉQÅ[ÉÄçƒäJÇÃÇΩÇﬂÇÃä÷êîÅiÉ{É^ÉìÇ»Ç«Ç…ê›íËÇ≈Ç´ÇÈÅj
-    public void ResumeGame()
-    {
-        Time.timeScale = 1f;  // éûä‘Çå≥Ç…ñﬂÇ∑
+        // ÉSÅ[Éãê¨å˜
+        Time.timeScale = 0f;
+
+        if (Game_Manager.Instance.goalUI != null)
+            Game_Manager.Instance.goalUI.SetActive(true);
     }
 }
