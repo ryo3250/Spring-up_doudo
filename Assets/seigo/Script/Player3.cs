@@ -60,5 +60,12 @@ public class Player3 : MonoBehaviour
         // 新しい速度を計算し、Rigidbodyに設定
         m_velocity = reflectDirection * m_speed; // 反射後の速度を計算
         rb.linearVelocity = m_velocity; // Rigidbodyに反映
+
+        // ボールが何かに当たったらバウンドとしてカウント
+        if (Game_Manager.Instance != null)
+        {
+            Game_Manager.Instance.AddHitCount();
+        }
     }
 }
+

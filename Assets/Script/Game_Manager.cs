@@ -1,50 +1,116 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Game_Manager : MonoBehaviour
 {
-    //シングルトンの宣言
-    public static Game_Manager Instance {  get; private set; }
+    public static Game_Manager Instance { get; private set; }
 
-    private int hitCount = 0; // あたり回数
+    [Header("ゲーム設定")]
+    [SerializeField] private int maxHitCount = 3;
 
-    [SerializeField] private Text hitCountText; 
+    [Header("UI")]
+    [SerializeField] private Text hitStatusText; // 現在 / 最大
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] public GameObject goalUI; // ★ ゴールUIを管理に追加
+
+    [Header("プレイヤー設定")]
+    [SerializeField] private Transform player; // プレイヤー（ボール）
+    private Vector3 playerStartPos;
+    private Rigidbody2D playerRb;
+
+    private int hitCount = 0;
+    private bool isGameOver = false;
+
     private void Awake()
     {
-        //シングルトン(どこからでも呼べるようにする）
         if (Instance == null)
-        {
             Instance = this;
-        }
-        else //それ以外は削除
-        {
+        else
             Destroy(gameObject);
-        }
     }
 
-    public void Start()
+    private void Start()
     {
-        UpdateHitText();//ゲーム開始時に初期値を表示
+        // プレイヤーの最初の位置と Rigidbody を保存
+        if (player != null)
+        {
+            playerStartPos = player.position;
+            playerRb = player.GetComponent<Rigidbody2D>();
+        }
+
+        UpdateHitUI();
     }
+
     public void AddHitCount()
     {
-        hitCount++;//ヒット回数を増やす
-        Debug.Log("現在のヒット数:" + hitCount);
+        if (isGameOver) return;
 
-        UpdateHitText();//カウントが増えたら表示を更新
-    }
+        hitCount++;
+        UpdateHitUI();
 
-    public int GetHitCount() //このスクリプト外から見るための関数
-    {
-       return hitCount;
-    }
-
-    private void UpdateHitText()
-    {
-        if (hitCountText != null) 
+        // 最大超えたらゲームオーバー
+        if (hitCount > maxHitCount)
         {
-            hitCountText.text = "ヒット数:" + hitCount.ToString();
+            GameOver();
         }
     }
+
+    private void UpdateHitUI()
+    {
+        if (hitStatusText != null)
+        {
+            hitStatusText.text = hitCount + " / " + maxHitCount;
+        }
+    }
+
+    public void GameOver()
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
+
+        Time.timeScale = 0f;
+
+        if (gameOverUI != null)
+            gameOverUI.SetActive(true);
+
+        Debug.Log("ゲームオーバー！");
+    }
+
+    // ★ ここからリセット処理
+    public void ResetGame()
+    {
+        // バウンド数リセット
+        hitCount = 0;
+        isGameOver = false;
+
+        // UI全て消す
+        if (gameOverUI != null)
+            gameOverUI.SetActive(false);
+
+        if (goalUI != null)
+            goalUI.SetActive(false);
+
+        // 時間を戻す
+        Time.timeScale = 1f;
+
+        // プレイヤー初期位置に戻す
+        if (player != null)
+        {
+            player.position = playerStartPos;
+
+            if (playerRb != null)
+            {
+                playerRb.linearVelocity = Vector2.zero;
+                playerRb.angularVelocity = 0f;
+            }
+        }
+
+        UpdateHitUI();
+
+        Debug.Log("ゲームリセット完了！");
+    }
+
+    public int GetHitCount() => hitCount;
+    public int GetMaxHitCount() => maxHitCount;
 }
