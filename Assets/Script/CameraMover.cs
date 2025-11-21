@@ -8,6 +8,12 @@ public class CameraMover : MonoBehaviour
     private bool isMoving = false;//カメラが動いている最中かどうか
     private Vector3 targetPos;//カメラが向かう目標座標
 
+    void Start()
+    {
+        int stage = PlayerPrefs.GetInt("SelectedStage", 0);
+
+        MoveToStage(stage);//開始時に指定ステージに移動
+    }
     void Update()
     {
         if (isMoving) //カメラが移動中なら動かす
@@ -38,6 +44,16 @@ public class CameraMover : MonoBehaviour
             );
             isMoving = true;//移動開始
             currentIndex++;
+        }
+    }
+
+    public void MoveToStage(int index) 
+    {
+        if (index >= 0 && index < cameraTargets.Length)//有効な範囲かの確認
+        {
+            Vector3 pos = cameraTargets[index].position;//indexを→ワールド座標を取り出し→posに保存
+            targetPos = new Vector3(pos.x, pos.y, transform.position.z);//カメラが目指す目標座標を決めている(zは深度になるので変えると消えるため固定)
+            isMoving = true;//カメラを動かすフラグ
         }
     }
 }
