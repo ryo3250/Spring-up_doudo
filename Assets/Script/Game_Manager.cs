@@ -76,17 +76,7 @@ public class Game_Manager : MonoBehaviour
         Debug.Log("ゲームオーバー！");
     }
 
-    public void ShowGoalUI() 
-    {
-        Time.timeScale = 0;
-        goalUI.SetActive(true);
-    }
-
-    public void OnGoalButtonPressed() 
-    { 
-        goalUI.SetActive(false);
-        ResetGame();
-    }
+    
 
     // ゲームリセット処理
     public void ResetGame()
