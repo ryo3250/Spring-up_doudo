@@ -55,6 +55,10 @@ public class Game_Manager : MonoBehaviour
         }
     }
 
+    public void SetPlayerStartPosition(Vector3 newPos) 
+    {
+        playerStartPos = newPos;
+    }
     private void UpdateHitUI()
     {
         if (hitStatusText != null)
@@ -76,14 +80,14 @@ public class Game_Manager : MonoBehaviour
         Debug.Log("ゲームオーバー！");
     }
 
-    public void ShowGoalUI() 
+    public void ShowGoalUI()
     {
         Time.timeScale = 0;
         goalUI.SetActive(true);
     }
 
-    public void OnGoalButtonPressed() 
-    { 
+    public void OnGoalButtonPressed()
+    {
         goalUI.SetActive(false);
         ResetGame();
     }

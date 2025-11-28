@@ -7,17 +7,22 @@ public class CameraMover : MonoBehaviour
     private int currentIndex = 0;//どこのターゲットに向かうかの番号
     private bool isMoving = false;//カメラが動いている最中かどうか
     private Vector3 targetPos;//カメラが向かう目標座標
+    public Transform[] playerSpawnPositions;
 
     void Start()
     {
         int stage = PlayerPrefs.GetInt("SelectedStage", 0);
 
+        currentIndex = stage;
+
         MoveToStage(stage);//開始時に指定ステージに移動
+        
     }
     void Update()
     {
         if (isMoving) //カメラが移動中なら動かす
         {
+            Debug.Log("Moving... 現在位置 = " + transform.position + " / target = " + targetPos);
             transform.position = Vector3.Lerp//いっきに移動しないように
             (
                 transform.position,
@@ -28,6 +33,17 @@ public class CameraMover : MonoBehaviour
             if (Vector3.Distance(transform.position,targetPos) < 0.1f)//カメラが0.1m以内に近づかいたら
             { 
                 isMoving = false;
+
+                // プレイヤー初期位置変更
+                if (playerSpawnPositions.Length > currentIndex) 
+                {
+                    //ステージごとに初期位置を変えたい場合
+                    Game_Manager.Instance.SetPlayerStartPosition(playerSpawnPositions[currentIndex].position);
+
+                }
+
+                //初期化
+                Game_Manager.Instance.ResetGame();
             }
         }
     }
@@ -35,15 +51,30 @@ public class CameraMover : MonoBehaviour
 
     public void MoveToNextStage()//ボタンが押されたときの処理
     {
-        if (currentIndex < cameraTargets.Length)//まだ移動先が残っているのか
+
+        Debug.Log("---- MoveToNextStage ----");
+        Debug.Log("currentIndex BEFORE = " + currentIndex);
+
+        if (currentIndex + 1 < cameraTargets.Length)
         {
+            currentIndex++;
+            Debug.Log("currentIndex AFTER = " + currentIndex);
+
             targetPos = new Vector3(
                 cameraTargets[currentIndex].position.x,
                 cameraTargets[currentIndex].position.y,
                 transform.position.z
             );
-            isMoving = true;//移動開始
-            currentIndex++;
+
+            Debug.Log("targetPos = " + targetPos);
+
+            isMoving = true;
+            Time.timeScale = 1f;
+            Debug.Log("isMoving = " + isMoving);
+        }
+        else
+        {
+            Debug.Log("次のステージはありません");
         }
     }
 
