@@ -3,32 +3,32 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player3 : MonoBehaviour
 {
-    [SerializeField] private float power = 5f;      // ‘Å‚¿o‚µ—Í
-    [SerializeField] private float m_speed = 15f;   // ‘¬“x
-    [SerializeField] private LineRenderer lineRenderer; // –îˆó—p‚ÌLineRenderer
-    [SerializeField] private float lineWidth = 0.1f; // –îˆóü‚Ì‘¾‚³
+    [SerializeField] private float power = 5f;      // æ‰“ã¡å‡ºã—åŠ›
+    [SerializeField] private float m_speed = 15f;   // é€Ÿåº¦
+    [SerializeField] private LineRenderer lineRenderer; // çŸ¢å°ç”¨ã®LineRenderer
+    [SerializeField] private float lineWidth = 0.1f; // çŸ¢å°ç·šã®å¤ªã•
 
     private Rigidbody2D rb;
-    private Vector2 m_velocity;        // Œ»İ‚Ì‘¬“x
-    private Vector2 startPos;          // ƒhƒ‰ƒbƒOŠJnˆÊ’u
-    private Vector2 endPos;            // ƒhƒ‰ƒbƒOI—¹ˆÊ’u
-    private bool isDragging = false;   // ƒhƒ‰ƒbƒOó‘Ô
+    private Vector2 m_velocity;        // ç¾åœ¨ã®é€Ÿåº¦
+    private Vector2 startPos;          // ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹ä½ç½®
+    private Vector2 endPos;            // ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†ä½ç½®
+    private bool isDragging = false;   // ãƒ‰ãƒ©ãƒƒã‚°çŠ¶æ…‹
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // ‰Šú‘¬“x‚Íƒ[ƒ‚ÅŠJnA‘Å‚¿o‚µ‘O‚Éİ’è‚·‚é
+        // åˆæœŸé€Ÿåº¦ã¯ã‚¼ãƒ­ã§é–‹å§‹ã€æ‰“ã¡å‡ºã—å‰ã«è¨­å®šã™ã‚‹
         m_velocity = Vector2.zero;
         rb.linearVelocity = m_velocity;
 
-        // LineRenderer‚Ì‰Šúİ’è
+        // LineRendererã®åˆæœŸè¨­å®š
         if (lineRenderer != null)
         {
-            lineRenderer.positionCount = 2; // n“_‚ÆI“_‚Ì2“_‚¾‚¯
+            lineRenderer.positionCount = 2; // å§‹ç‚¹ã¨çµ‚ç‚¹ã®2ç‚¹ã ã‘
             lineRenderer.startWidth = lineWidth;
             lineRenderer.endWidth = lineWidth;
-            lineRenderer.enabled = false; // Å‰‚Í”ñ•\¦
+            lineRenderer.enabled = false; // æœ€åˆã¯éè¡¨ç¤º
         }
     }
 
@@ -37,10 +37,10 @@ public class Player3 : MonoBehaviour
         startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isDragging = true;
 
-        // ƒhƒ‰ƒbƒO’†‚Í‘¬“x‚ğƒ[ƒ‚É‚µ‚Ä’â~
+        // ãƒ‰ãƒ©ãƒƒã‚°ä¸­ã¯é€Ÿåº¦ã‚’ã‚¼ãƒ­ã«ã—ã¦åœæ­¢
         rb.linearVelocity = Vector2.zero;
 
-        // LineRenderer‚ğ•\¦‚µ‚ÄAn“_‚ÆI“_‚ğİ’è
+        // LineRendererã‚’è¡¨ç¤ºã—ã¦ã€å§‹ç‚¹ã¨çµ‚ç‚¹ã‚’è¨­å®š
         if (lineRenderer != null)
         {
             lineRenderer.enabled = true;
@@ -50,10 +50,10 @@ public class Player3 : MonoBehaviour
 
     void OnMouseDrag()
     {
-        // ƒ}ƒEƒX‚ÌŒ»İˆÊ’u‚ğæ“¾
+        // ãƒã‚¦ã‚¹ã®ç¾åœ¨ä½ç½®ã‚’å–å¾—
         endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // LineRenderer‚ÌI“_‚ğƒhƒ‰ƒbƒOæ‚Éİ’è
+        // LineRendererã®çµ‚ç‚¹ã‚’ãƒ‰ãƒ©ãƒƒã‚°å…ˆã«è¨­å®š
         if (lineRenderer != null)
         {
             lineRenderer.SetPosition(1, endPos);
@@ -62,16 +62,16 @@ public class Player3 : MonoBehaviour
 
     void OnMouseUp()
     {
-        // ƒhƒ‰ƒbƒOI—¹‚É—Í‚ğ‰Á‚¦‚é
+        // ãƒ‰ãƒ©ãƒƒã‚°çµ‚äº†æ™‚ã«åŠ›ã‚’åŠ ãˆã‚‹
         isDragging = false;
 
-        // ˆø‚Á’£‚Á‚½•ûŒüistartPos - endPosj‚É—Í‚ğ‰Á‚¦‚é
+        // å¼•ã£å¼µã£ãŸæ–¹å‘ï¼ˆstartPos - endPosï¼‰ã«åŠ›ã‚’åŠ ãˆã‚‹
         Vector2 direction = startPos - endPos;
-        direction.Normalize();  // ³‹K‰»‚µ‚Ä•ûŒüƒxƒNƒgƒ‹‚Æ‚µ‚Äg—p
-        m_velocity = direction * power; // •ûŒü‚ÉŠî‚Ã‚¢‚Ä‘¬“x‚ğXV
-        rb.AddForce(m_velocity, ForceMode2D.Impulse); // ‘¬“x‚Å‚Í‚È‚­—Í‚ğ‰Á‚¦‚é
+        direction.Normalize();  // æ­£è¦åŒ–ã—ã¦æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ä½¿ç”¨
+        m_velocity = direction * power; // æ–¹å‘ã«åŸºã¥ã„ã¦é€Ÿåº¦ã‚’æ›´æ–°
+        rb.AddForce(m_velocity, ForceMode2D.Impulse); // é€Ÿåº¦ã§ã¯ãªãåŠ›ã‚’åŠ ãˆã‚‹
 
-        // LineRenderer‚ğ”ñ•\¦‚É‚·‚é
+        // LineRendererã‚’éè¡¨ç¤ºã«ã™ã‚‹
         if (lineRenderer != null)
         {
             lineRenderer.enabled = false;
@@ -80,21 +80,27 @@ public class Player3 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // Õ“Ë‚Ì”½Ëˆ—
-        var inDirection = m_velocity;                        // Œ»İ‚Ìis•ûŒü
-        var inNormal = other.contacts[0].normal;             // Õ“Ë–Ê‚Ì–@üƒxƒNƒgƒ‹
+        // åå°„å‡¦ç†
+        var inDirection = m_velocity;
+        var inNormal = other.contacts[0].normal;
 
-        // ”½Ë•ûŒü‚ğŒvZ‚µ³‹K‰»
+        // åå°„æ–¹å‘ã‚’è¨ˆç®—ã—ã€é€Ÿåº¦ã‚’æ›´æ–°
         Vector2 reflectDirection = Vector2.Reflect(inDirection, inNormal).normalized;
+        m_velocity = reflectDirection * m_speed;
 
-        // V‚µ‚¢‘¬“x‚ğŒvZ‚µARigidbody‚Éİ’è
-        m_velocity = reflectDirection * m_speed; // ”½ËŒã‚Ì‘¬“x‚ğŒvZ
-        rb.linearVelocity = m_velocity; // Rigidbody‚É”½‰f
+        // Rigidbodyã«åæ˜ 
+        rb.linearVelocity = m_velocity;
 
-        // ƒ{[ƒ‹‚ª‰½‚©‚É“–‚½‚Á‚½‚çƒoƒEƒ“ƒh‚Æ‚µ‚ÄƒJƒEƒ“ƒg
+        // ãƒœãƒ¼ãƒ«ãŒä½•ã‹ã«å½“ãŸã£ãŸã‚‰ãƒã‚¦ãƒ³ãƒ‰ã¨ã—ã¦ã‚«ã‚¦ãƒ³ãƒˆ
         if (Game_Manager.Instance != null)
         {
             Game_Manager.Instance.AddHitCount();
+        }
+
+        // å£ã«è§¦ã‚ŒãŸå ´åˆã€ãƒã‚¦ãƒ³ãƒ‰å›æ•°ãŒè¶³ã‚Šã¦ã„ã‚Œã°ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
+        if (other.gameObject.CompareTag("Wall") && Game_Manager.Instance.GetHitCount() < Game_Manager.Instance.GetMaxHitCount())
+        {
+            Game_Manager.Instance.GameOver();
         }
     }
 }
