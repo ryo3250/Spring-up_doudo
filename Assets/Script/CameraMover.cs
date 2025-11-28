@@ -1,59 +1,68 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class CameraMover : MonoBehaviour
 {
-    public Transform[] cameraTargets; //50ƒTƒCƒY‚ÌCameraTarget(ƒXƒe[ƒW‚Ì—Ê‚É‚æ‚Á‚Ä‚Í•ÏX‰Â”\)
-    public float speed = 5f;//ƒJƒƒ‰‘¬“x
-    private int currentIndex = 0;//‚Ç‚±‚Ìƒ^[ƒQƒbƒg‚ÉŒü‚©‚¤‚©‚Ì”Ô†
-    private bool isMoving = false;//ƒJƒƒ‰‚ª“®‚¢‚Ä‚¢‚éÅ’†‚©‚Ç‚¤‚©
-    private Vector3 targetPos;//ƒJƒƒ‰‚ªŒü‚©‚¤–Ú•WÀ•W
+    public Transform[] cameraTargets; //50ã‚µã‚¤ã‚ºã®CameraTarget(ã‚¹ãƒ†ãƒ¼ã‚¸ã®é‡ã«ã‚ˆã£ã¦ã¯å¤‰æ›´å¯èƒ½)
+    public float speed = 5f;//ã‚«ãƒ¡ãƒ©é€Ÿåº¦
+    private int currentIndex = 0;//ã©ã“ã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«å‘ã‹ã†ã‹ã®ç•ªå·
+    private bool isMoving = false;//ã‚«ãƒ¡ãƒ©ãŒå‹•ã„ã¦ã„ã‚‹æœ€ä¸­ã‹ã©ã†ã‹
+    private Vector3 targetPos;//ã‚«ãƒ¡ãƒ©ãŒå‘ã‹ã†ç›®æ¨™åº§æ¨™
+    private bool initializedAfterMove = false;//åˆæœŸåŒ–ã‚’1å›ã ã‘èµ·ã“ã™
 
     void Start()
     {
         int stage = PlayerPrefs.GetInt("SelectedStage", 0);
 
-        MoveToStage(stage);//ŠJn‚Éw’èƒXƒe[ƒW‚ÉˆÚ“®
+        MoveToStage(stage);//é–‹å§‹æ™‚ã«æŒ‡å®šã‚¹ãƒ†ãƒ¼ã‚¸ã«ç§»å‹•
     }
     void Update()
     {
-        if (isMoving) //ƒJƒƒ‰‚ªˆÚ“®’†‚È‚ç“®‚©‚·
+        if (isMoving) //ã‚«ãƒ¡ãƒ©ãŒç§»å‹•ä¸­ãªã‚‰å‹•ã‹ã™
         {
-            transform.position = Vector3.Lerp//‚¢‚Á‚«‚ÉˆÚ“®‚µ‚È‚¢‚æ‚¤‚É
+            transform.position = Vector3.Lerp//ã„ã£ãã«ç§»å‹•ã—ãªã„ã‚ˆã†ã«
             (
                 transform.position,
                 targetPos,
                 speed * Time.deltaTime
             );
 
-            if (Vector3.Distance(transform.position,targetPos) < 0.1f)//ƒJƒƒ‰‚ª0.1mˆÈ“à‚É‹ß‚Ã‚©‚¢‚½‚ç
-            { 
+            if (Vector3.Distance(transform.position, targetPos) < 0.1f)//ã‚«ãƒ¡ãƒ©ãŒ0.1mä»¥å†…ã«è¿‘ã¥ã‹ã„ãŸã‚‰
+            {
                 isMoving = false;
+
+                if (!initializedAfterMove) 
+                { 
+                //ã‚¹ãƒ†ãƒ¼ã‚¸ç§»å‹•å¾Œã«ã‚²ãƒ¼ãƒ åˆæœŸåŒ–
+                    Game_Manager.Instance.ResetGame();//åˆæœŸåŒ–
+                    initializedAfterMove = true;//åˆæœŸåŒ–æ¸ˆã¿ã«ã™ã‚‹
+                }
             }
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public void MoveToNextStage()//ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Ìˆ—
+    public void MoveToNextStage()//ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã¨ãã®å‡¦ç†
     {
-        if (currentIndex < cameraTargets.Length)//‚Ü‚¾ˆÚ“®æ‚ªc‚Á‚Ä‚¢‚é‚Ì‚©
+        if (currentIndex < cameraTargets.Length)//ã¾ã ç§»å‹•å…ˆãŒæ®‹ã£ã¦ã„ã‚‹ã®ã‹
         {
             targetPos = new Vector3(
                 cameraTargets[currentIndex].position.x,
                 cameraTargets[currentIndex].position.y,
                 transform.position.z
             );
-            isMoving = true;//ˆÚ“®ŠJn
+            isMoving = true;//ç§»å‹•é–‹å§‹
+            initializedAfterMove = false;// â† æ¬¡ã®ç§»å‹•ãŒå§‹ã¾ã‚‹å‰ã«è§£é™¤
             currentIndex++;
         }
     }
 
     public void MoveToStage(int index) 
     {
-        if (index >= 0 && index < cameraTargets.Length)//—LŒø‚È”ÍˆÍ‚©‚ÌŠm”F
+        if (index >= 0 && index < cameraTargets.Length)//æœ‰åŠ¹ãªç¯„å›²ã‹ã®ç¢ºèª
         {
-            Vector3 pos = cameraTargets[index].position;//index‚ğ¨ƒ[ƒ‹ƒhÀ•W‚ğæ‚èo‚µ¨pos‚É•Û‘¶
-            targetPos = new Vector3(pos.x, pos.y, transform.position.z);//ƒJƒƒ‰‚ª–Úw‚·–Ú•WÀ•W‚ğŒˆ‚ß‚Ä‚¢‚é(z‚Í[“x‚É‚È‚é‚Ì‚Å•Ï‚¦‚é‚ÆÁ‚¦‚é‚½‚ßŒÅ’è)
-            isMoving = true;//ƒJƒƒ‰‚ğ“®‚©‚·ƒtƒ‰ƒO
+            Vector3 pos = cameraTargets[index].position;//indexã‚’â†’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’å–ã‚Šå‡ºã—â†’posã«ä¿å­˜
+            targetPos = new Vector3(pos.x, pos.y, transform.position.z);//ã‚«ãƒ¡ãƒ©ãŒç›®æŒ‡ã™ç›®æ¨™åº§æ¨™ã‚’æ±ºã‚ã¦ã„ã‚‹(zã¯æ·±åº¦ã«ãªã‚‹ã®ã§å¤‰ãˆã‚‹ã¨æ¶ˆãˆã‚‹ãŸã‚å›ºå®š)
+            isMoving = true;//ã‚«ãƒ¡ãƒ©ã‚’å‹•ã‹ã™ãƒ•ãƒ©ã‚°
         }
     }
 }
