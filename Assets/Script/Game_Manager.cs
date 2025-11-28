@@ -1,20 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class Game_Manager : MonoBehaviour
 {
     public static Game_Manager Instance { get; private set; }
 
-    [Header("ƒQ[ƒ€Ý’è")]
-    [SerializeField] private int maxHitCount = 3;  // Å‘åƒoƒEƒ“ƒh‰ñ”
+    [Header("ã‚²ãƒ¼ãƒ è¨­å®š")]
+    [SerializeField] private int maxHitCount = 3;  // æœ€å¤§ãƒã‚¦ãƒ³ãƒ‰å›žæ•°
 
     [Header("UI")]
-    [SerializeField] private Text hitStatusText;    // ƒoƒEƒ“ƒh”•\Ž¦—p
-    [SerializeField] private GameObject gameOverUI; // ƒQ[ƒ€ƒI[ƒo[‰æ–Ê
-    [SerializeField] public GameObject goalUI;     // ƒS[ƒ‹‰æ–Ê
+    [SerializeField] private Text hitStatusText;    // ãƒã‚¦ãƒ³ãƒ‰æ•°è¡¨ç¤ºç”¨
+    [SerializeField] private GameObject gameOverUI; // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ç”»é¢
+    [SerializeField] public GameObject goalUI;     // ã‚´ãƒ¼ãƒ«ç”»é¢
 
-    [Header("ƒvƒŒƒCƒ„[Ý’è")]
-    [SerializeField] private Transform player;      // ƒvƒŒƒCƒ„[iƒ{[ƒ‹j
+    [Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è¨­å®š")]
+    [SerializeField] private Transform player;      // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ï¼ˆãƒœãƒ¼ãƒ«ï¼‰
     private Vector3 playerStartPos;
     private Rigidbody2D playerRb;
 
@@ -31,7 +31,7 @@ public class Game_Manager : MonoBehaviour
 
     private void Start()
     {
-        // ƒvƒŒƒCƒ„[‚ÌÅ‰‚ÌˆÊ’u‚Æ Rigidbody ‚ð•Û‘¶
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€åˆã®ä½ç½®ã¨ Rigidbody ã‚’ä¿å­˜
         if (player != null)
         {
             playerStartPos = player.position;
@@ -48,7 +48,7 @@ public class Game_Manager : MonoBehaviour
         hitCount++;
         UpdateHitUI();
 
-        // ƒoƒEƒ“ƒh‰ñ”‚ªÅ‘å‚ð’´‚¦‚½‚çƒQ[ƒ€ƒI[ƒo[
+        // ãƒã‚¦ãƒ³ãƒ‰å›žæ•°ãŒæœ€å¤§ã‚’è¶…ãˆãŸã‚‰ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
         if (hitCount > maxHitCount)
         {
             GameOver();
@@ -73,27 +73,39 @@ public class Game_Manager : MonoBehaviour
         if (gameOverUI != null)
             gameOverUI.SetActive(true);
 
-        Debug.Log("ƒQ[ƒ€ƒI[ƒo[I");
+        Debug.Log("ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ï¼");
     }
 
-    // ƒQ[ƒ€ƒŠƒZƒbƒgˆ—
+    public void ShowGoalUI() 
+    {
+        Time.timeScale = 0;
+        goalUI.SetActive(true);
+    }
+
+    public void OnGoalButtonPressed() 
+    { 
+        goalUI.SetActive(false);
+        ResetGame();
+    }
+
+    // ã‚²ãƒ¼ãƒ ãƒªã‚»ãƒƒãƒˆå‡¦ç†
     public void ResetGame()
     {
-        // ƒoƒEƒ“ƒh”ƒŠƒZƒbƒg
+        // ãƒã‚¦ãƒ³ãƒ‰æ•°ãƒªã‚»ãƒƒãƒˆ
         hitCount = 0;
         isGameOver = false;
 
-        // UI‘S‚ÄÁ‚·
+        // UIå…¨ã¦æ¶ˆã™
         if (gameOverUI != null)
             gameOverUI.SetActive(false);
 
         if (goalUI != null)
             goalUI.SetActive(false);
 
-        // ŽžŠÔ‚ð–ß‚·
+        // æ™‚é–“ã‚’æˆ»ã™
         Time.timeScale = 1f;
 
-        // ƒvƒŒƒCƒ„[‰ŠúˆÊ’u‚É–ß‚·
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åˆæœŸä½ç½®ã«æˆ»ã™
         if (player != null)
         {
             player.position = playerStartPos;
@@ -107,7 +119,7 @@ public class Game_Manager : MonoBehaviour
 
         UpdateHitUI();
 
-        Debug.Log("ƒQ[ƒ€ƒŠƒZƒbƒgŠ®—¹I");
+        Debug.Log("ã‚²ãƒ¼ãƒ ãƒªã‚»ãƒƒãƒˆå®Œäº†ï¼");
     }
 
     public int GetHitCount() => hitCount;
