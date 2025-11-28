@@ -1,16 +1,13 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ResetButton : MonoBehaviour
 {
-    [SerializeField] private Button resetButton;
-
-    private void Start()
+    // リセットボタンが押された時に呼ばれるメソッド
+    public void OnResetButtonClicked()
     {
-        if (resetButton != null)
-            resetButton.onClick.AddListener(() =>
-            {
-                Game_Manager.Instance.ResetGame();
-            });
+        if (Game_Manager.Instance != null)
+        {
+            Game_Manager.Instance.ResetGame(); // ゲームリセット
+        }
     }
 }

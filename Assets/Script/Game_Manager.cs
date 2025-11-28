@@ -6,15 +6,15 @@ public class Game_Manager : MonoBehaviour
     public static Game_Manager Instance { get; private set; }
 
     [Header("ゲーム設定")]
-    [SerializeField] private int maxHitCount = 3;
+    [SerializeField] private int maxHitCount = 3;  // 最大バウンド回数
 
     [Header("UI")]
-    [SerializeField] private Text hitStatusText; // 現在 / 最大
-    [SerializeField] private GameObject gameOverUI;
-    [SerializeField] public GameObject goalUI; // ★ ゴールUIを管理に追加
+    [SerializeField] private Text hitStatusText;    // バウンド数表示用
+    [SerializeField] private GameObject gameOverUI; // ゲームオーバー画面
+    [SerializeField] public GameObject goalUI;     // ゴール画面
 
     [Header("プレイヤー設定")]
-    [SerializeField] private Transform player; // プレイヤー（ボール）
+    [SerializeField] private Transform player;      // プレイヤー（ボール）
     private Vector3 playerStartPos;
     private Rigidbody2D playerRb;
 
@@ -48,7 +48,7 @@ public class Game_Manager : MonoBehaviour
         hitCount++;
         UpdateHitUI();
 
-        // 最大超えたらゲームオーバー
+        // バウンド回数が最大を超えたらゲームオーバー
         if (hitCount > maxHitCount)
         {
             GameOver();
@@ -68,7 +68,6 @@ public class Game_Manager : MonoBehaviour
         if (isGameOver) return;
 
         isGameOver = true;
-
         Time.timeScale = 0f;
 
         if (gameOverUI != null)
@@ -77,7 +76,7 @@ public class Game_Manager : MonoBehaviour
         Debug.Log("ゲームオーバー！");
     }
 
-    // ★ ここからリセット処理
+    // ゲームリセット処理
     public void ResetGame()
     {
         // バウンド数リセット
