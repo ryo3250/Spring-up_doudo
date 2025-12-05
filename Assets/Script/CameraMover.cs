@@ -57,9 +57,10 @@ public class CameraMover : MonoBehaviour
 
         if (currentIndex + 1 < cameraTargets.Length)
         {
-            currentIndex++;
+            currentIndex++;//次のステージへ
             Debug.Log("currentIndex AFTER = " + currentIndex);
 
+            //カメラの更新
             targetPos = new Vector3(
                 cameraTargets[currentIndex].position.x,
                 cameraTargets[currentIndex].position.y,
@@ -68,7 +69,7 @@ public class CameraMover : MonoBehaviour
 
             Debug.Log("targetPos = " + targetPos);
 
-            isMoving = true;
+            isMoving = true;//移動の開始
             Time.timeScale = 1f;
             Debug.Log("isMoving = " + isMoving);
         }

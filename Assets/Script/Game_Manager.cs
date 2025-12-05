@@ -23,12 +23,15 @@ public class Game_Manager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);   // ★重複したGameManagerを破壊（必須）
+            return;
+        }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // ★シーンを跨いで生存
+    }
     private void Start()
     {
         // プレイヤーの最初の位置と Rigidbody を保存
