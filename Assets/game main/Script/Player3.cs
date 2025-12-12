@@ -97,10 +97,10 @@ public class Player3 : MonoBehaviour
             Game_Manager.Instance.AddHitCount();
         }
 
-        // 壁に触れた場合、バウンド回数が足りていればゲームオーバー
-        if (other.gameObject.CompareTag("Wall") && Game_Manager.Instance.GetHitCount() < Game_Manager.Instance.GetMaxHitCount())
-        {
-            Game_Manager.Instance.GameOver();
-        }
+        //// 壁に触れた場合、バウンド回数が足りていればゲームオーバー
+        //if (other.gameObject.CompareTag("Wall") && Game_Manager.Instance.GetHitCount() < Game_Manager.Instance.GetMaxHitCount())
+        //{
+        //    Game_Manager.Instance.GameOver();
+        //}
     }
 }

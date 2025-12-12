@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 136340797}
   m_Layer: 0
   m_Name: wall4
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 192619387}
   m_Layer: 0
   m_Name: wall2
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2855,7 +2855,7 @@ GameObject:
   - component: {fileID: 1704155615}
   m_Layer: 0
   m_Name: wall3
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2993,6 +2993,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2088704941}
     - target: {fileID: 848433730835031367, guid: 1d1b77adeab5fab4e90115629f25f44e, type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 7424697749767296485}
+    - target: {fileID: 848433730835031367, guid: 1d1b77adeab5fab4e90115629f25f44e, type: 3}
       propertyPath: hitStatusText
       value: 
       objectReference: {fileID: 4067079064734287394}
@@ -3061,7 +3065,7 @@ GameObject:
   - component: {fileID: 1824495409}
   m_Layer: 0
   m_Name: wall1
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
