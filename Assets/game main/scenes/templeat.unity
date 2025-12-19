@@ -755,8 +755,6 @@ MonoBehaviour:
   speed: 5
   playerSpawnPositions:
   - {fileID: 467660680}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &675499284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,7 +1334,7 @@ GameObject:
   - component: {fileID: 1293275326}
   - component: {fileID: 1293275325}
   m_Layer: 5
-  m_Name: titel_button
+  m_Name: select_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1469,7 +1467,7 @@ GameObject:
   - component: {fileID: 1301264973}
   - component: {fileID: 1301264972}
   m_Layer: 5
-  m_Name: select_button
+  m_Name: titel_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1754,10 +1752,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 633870666}
-        m_TargetAssemblyTypeName: CameraMover, Assembly-CSharp
-        m_MethodName: MoveToNextStage
-        m_Mode: 1
+      - m_Target: {fileID: 1523191797}
+        m_TargetAssemblyTypeName: SceneManeger, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1957,7 +1955,7 @@ PrefabInstance:
     - target: {fileID: 848433730835031367, guid: 1d1b77adeab5fab4e90115629f25f44e, type: 3}
       propertyPath: gameOverUI
       value: 
-      objectReference: {fileID: 7424697749767296485}
+      objectReference: {fileID: 0}
     - target: {fileID: 848433730835031367, guid: 1d1b77adeab5fab4e90115629f25f44e, type: 3}
       propertyPath: hitStatusText
       value: 
@@ -2852,5 +2850,5 @@ SceneRoots:
   - {fileID: 18344643}
   - {fileID: 137814069}
   - {fileID: 2137123351}
-  - {fileID: 1794289936}
   - {fileID: 1379802275}
+  - {fileID: 1794289936}
