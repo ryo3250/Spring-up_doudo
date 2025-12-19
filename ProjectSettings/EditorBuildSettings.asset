@@ -16,7 +16,11 @@ EditorBuildSettings:
     guid: b5f401dac378e194a8385844f3b3cd65
   - enabled: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
     path: Assets/game main/scenes/main ground.unity
+=======
+    path: Assets/game main/scenes/templeat.unity
+>>>>>>> c342ffd728d55125587864e98f2597bf6a2bc881
 =======
     path: Assets/game main/scenes/templeat.unity
 >>>>>>> c342ffd728d55125587864e98f2597bf6a2bc881
