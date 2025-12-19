@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/select.unity
     guid: b5f401dac378e194a8385844f3b3cd65
   - enabled: 1
-    path: Assets/Scenes/main ground.unity
+    path: Assets/game main/scenes/templeat.unity
     guid: 0df5f254a563b9a47bcacebb1992c259
   - enabled: 0
     path: Assets/Scenes/test ground.unity
