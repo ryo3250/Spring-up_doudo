@@ -12,14 +12,16 @@ public class Player : MonoBehaviour
     private Vector2 m_velocity;
     private Vector2 startPos;
     private Vector2 endPos;
-    private bool isDragging = false;
     private Vector3 startWorldPos;
+
+    // ★ 追加：ゴール到達フラグ
+    private bool hasReachedGoal = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         m_velocity = Vector2.zero;
-        rb.linearVelocity = m_velocity;
+        rb.linearVelocity = Vector2.zero;
 
         if (lineRenderer != null)
         {
@@ -34,9 +36,10 @@ public class Player : MonoBehaviour
 
     private void OnMouseDown()
     {
-        startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        isDragging = true;
         rb.linearVelocity = Vector2.zero;
+
+        startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
 
         if (lineRenderer != null)
         {
@@ -48,16 +51,16 @@ public class Player : MonoBehaviour
     private void OnMouseDrag()
     {
         endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+        
         if (lineRenderer != null)
             lineRenderer.SetPosition(1, endPos);
     }
 
     private void OnMouseUp()
     {
-        isDragging = false;
         Vector2 direction = startPos - endPos;
         direction.Normalize();
+
         m_velocity = direction * power;
         rb.AddForce(m_velocity, ForceMode2D.Impulse);
 
@@ -67,12 +70,16 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // GameManager が「もう数えるな」と言ってたら即終了
-        if (!GameManager.Instance.CanCountHit())
-            return;
-
-        // ゴールは反射もしない・数えない
+        // ★ ゴール最優先
         if (collision.gameObject.CompareTag("Goal"))
+        {
+            hasReachedGoal = true;
+            GameManager.Instance.NotifyGoalSuccess();
+            return;
+        }
+
+        // ★ ゴール後 or 数えられない状態なら完全停止
+        if (hasReachedGoal || !GameManager.Instance.CanCountHit())
             return;
 
         Vector2 normal = collision.contacts[0].normal;
@@ -88,10 +95,9 @@ public class Player : MonoBehaviour
         GameManager.Instance.AddHitCount();
     }
 
-
-
     public void ResetPlayer()
     {
+        hasReachedGoal = false; // ★ 超重要
         transform.position = startWorldPos;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
