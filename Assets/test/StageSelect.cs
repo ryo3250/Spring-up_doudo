@@ -9,6 +9,7 @@ public class StageSelect : MonoBehaviour
         if (index < 0 || index >= stages.Length) return;
 
         StageData stage = stages[index];
+        GameManager.Instance.SetStageIndex(index);
         GameManager.Instance.StartNewStage(stage);
 
         // ステージを別Sceneにしたい場合はここでロード

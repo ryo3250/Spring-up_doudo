@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
     // ゲーム開始
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene"); // 実際のゲームシーンに遷移
+        SceneManager.LoadScene("select"); // 実際のゲームシーンに遷移
     }
 
     // オプション設定画面

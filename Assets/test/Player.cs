@@ -67,13 +67,28 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 reflectDir = Vector2.Reflect(m_velocity, collision.contacts[0].normal).normalized;
+        // GameManager が「もう数えるな」と言ってたら即終了
+        if (!GameManager.Instance.CanCountHit())
+            return;
+
+        // ゴールは反射もしない・数えない
+        if (collision.gameObject.CompareTag("Goal"))
+            return;
+
+        Vector2 normal = collision.contacts[0].normal;
+
+        // 正面衝突のみ
+        if (Vector2.Dot(m_velocity.normalized, normal) >= 0f)
+            return;
+
+        Vector2 reflectDir = Vector2.Reflect(m_velocity, normal).normalized;
         m_velocity = reflectDir * m_speed;
         rb.linearVelocity = m_velocity;
 
-        // バウンド通知
         GameManager.Instance.AddHitCount();
     }
+
+
 
     public void ResetPlayer()
     {
