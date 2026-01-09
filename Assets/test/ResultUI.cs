@@ -4,7 +4,7 @@ public class ResultUI : MonoBehaviour
 {
     [SerializeField] GameObject successPanel;
     [SerializeField] GameObject failPanel;
-
+    private bool shown = false;
     public void ShowSuccess()
     {
         successPanel.SetActive(true);
@@ -25,7 +25,7 @@ public class ResultUI : MonoBehaviour
 
     public void OnRetry()
     {
-        GameManager.Instance.RestartStageClean();
+        GameManager.Instance.RetryStage();
     }
 
     public void OnTitle()

@@ -2614,6 +2614,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1717514410756093626, guid: 03ae36b37516f0a45899bc47d0b89143, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6408719265662864044, guid: 03ae36b37516f0a45899bc47d0b89143, type: 3}
       propertyPath: m_Name
       value: Goal Square

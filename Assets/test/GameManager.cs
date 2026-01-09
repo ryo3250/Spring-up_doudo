@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+
 public class GameManager : MonoBehaviour
 {
     // ===== シングルトン =====
@@ -11,9 +12,8 @@ public class GameManager : MonoBehaviour
 
     // ===== イベント =====
     public static event System.Action OnGoalSuccess;
-    public System.Action OnStageSuccess;
-    public System.Action OnStageFailed;
     public static event System.Action OnGameOver;
+    public System.Action OnStageFailed;
 
     // ===== ゲーム状態 =====
     private int hitCount;
@@ -35,28 +35,24 @@ public class GameManager : MonoBehaviour
     }
 
     // =========================
-    // ResultUI から呼ばれる遷移関数
+    // シーン遷移（ResultUI用）
     // =========================
 
-    // リトライ
     public void RetryStage()
     {
         ResetFlags();
         SceneManager.LoadScene("Stage");
     }
 
-    // タイトルへ
     public void GoToTitle()
     {
         ResetFlags();
         SceneManager.LoadScene("Title");
     }
 
-    // 次のステージへ
     public void GoToNextStage()
     {
         int next = CurrentStageIndex + 1;
-
         ResetFlags();
 
         if (StageDatabase.Instance != null &&
@@ -71,30 +67,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // StageSelect から呼ぶ
     public void SetStageIndex(int index)
     {
         CurrentStageIndex = index;
     }
 
     // =========================
-    // ゲーム進行ロジック
+    // ゲーム進行
     // =========================
-    public void SetGameOver()
-    {
-        if (isGameOver) return;
-
-        isGameOver = true;
-        OnStageFailed?.Invoke(); 
-        OnGameOver?.Invoke();
-    }
 
     public void StartNewStage(StageData stage)
     {
         hitCount = 0;
+        maxHitCount = stage.maxHitCount;
         isGameOver = false;
         isGoalReached = false;
-        maxHitCount = stage.maxHitCount;
 
         var player = FindAnyObjectByType<Player>();
         if (player != null)
@@ -117,20 +104,27 @@ public class GameManager : MonoBehaviour
 
         if (hitCount > maxHitCount)
         {
-            isGameOver = true;
+            SetGameOver();
             OnStageFailed?.Invoke();
-            OnGameOver?.Invoke();
         }
     }
 
-    // ゴール成功
+    // ===== GameOver =====
+    public void SetGameOver()
+    {
+        if (isGameOver || isGoalReached) return;
+
+        isGameOver = true;
+        OnGameOver?.Invoke();
+    }
+
+    // ===== ゴール成功 =====
     public void NotifyGoalSuccess()
     {
-        if (isGoalReached) return;
+        if (isGameOver || isGoalReached) return;
 
         isGoalReached = true;
         OnGoalSuccess?.Invoke();
-        OnStageSuccess?.Invoke();
     }
 
     // =========================
@@ -141,34 +135,11 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = false;
         isGoalReached = false;
-    }
-
-    public void RestartStageClean()
-    {
-        StartCoroutine(RestartStageCoroutine());
-    }
-
-    private IEnumerator RestartStageCoroutine()
-    {
-        // ① 物理・入力を完全停止
-        Time.timeScale = 0f;
-
-        // ② 状態完全リセット
         hitCount = 0;
-        isGameOver = false;
-        isGoalReached = false;
-
-        yield return null; // 1フレーム待つ
-
-        // ③ timeScale を戻す
-        Time.timeScale = 1f;
-
-        // ④ シーン再ロード
-        SceneManager.LoadScene("Stage");
     }
-
 
     public int GetHitCount() => hitCount;
     public int GetMaxHitCount() => maxHitCount;
     public bool IsGameOver() => isGameOver;
+    public bool IsGoalReached() => isGoalReached;
 }

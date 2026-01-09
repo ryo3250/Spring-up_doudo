@@ -8,7 +8,8 @@ public class Goal1 : MonoBehaviour  // Goal -> Goal1 に変更
         if (!collision.gameObject.CompareTag("Player")) return;
 
         var gm = GameManager.Instance;  // GameManager の名前を修正
-
+                                        // すでに失敗 or 成功してたら無視
+        if (gm.IsGameOver()) return;
         // バウンド回数が足りていない場合、ゲームオーバー
         if (gm.GetHitCount() < gm.GetMaxHitCount())
         {
