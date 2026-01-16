@@ -7,6 +7,7 @@ public class Goal1 : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         GameManager.Instance.OnReachGoal();
+        Debug.Log("ƒS[ƒ‹‚É‰½‚©G‚ê‚½: " + other.name);
     }
 }
 

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Stage1
   m_EditorClassIdentifier: 
   stageName: 1-1
-  maxHitCount: 2
+  stagePrefab: {fileID: 1263343073120443509, guid: e5ebd5a60ccb0114bb02a6d7be6411ec, type: 3}
   playerStartPos: {x: -7, y: 0, z: 0}
+  maxHitCount: 2

@@ -3,7 +3,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StageData", menuName = "Game/StageData")]
 public class StageData : ScriptableObject
 {
-    public string stageName;          // ステージ名（任意）
-    public int maxHitCount = 3;       // このステージの最大バウンド回数
-    public Vector3 playerStartPos;    // プレイヤー開始位置
+    [Header("表示用（任意）")]
+    public string stageName;
+
+    [Header("ステージ構造（壁・ゴール全部入り）")]
+    public GameObject stagePrefab;
+
+    [Header("プレイヤー設定")]
+    public Vector3 playerStartPos;
+
+    [Header("ルール")]
+    public int maxHitCount = 3;
 }
