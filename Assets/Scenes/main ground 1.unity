@@ -1427,6 +1427,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goal Square
       objectReference: {fileID: 0}
+    - target: {fileID: 8196189336101785271, guid: 03ae36b37516f0a45899bc47d0b89143, type: 3}
+      propertyPath: m_Color.a
+      value: 0.92156863
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1539,7 +1543,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2796381682351499983, guid: d148d0662c8f57747a446d20912b650f, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3886608557743863829, guid: d148d0662c8f57747a446d20912b650f, type: 3}
       propertyPath: m_Name
