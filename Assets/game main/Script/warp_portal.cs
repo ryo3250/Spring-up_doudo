@@ -22,6 +22,7 @@ public class warp_portal : MonoBehaviour
         canWarp = false;
 
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
         if (rb != null) 
         { 
             rb.linearVelocity = Vector2.zero;
