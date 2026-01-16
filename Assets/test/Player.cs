@@ -31,7 +31,15 @@ public class Player : MonoBehaviour
             lineRenderer.enabled = false;
         }
 
-        startWorldPos = transform.position;
+ 
+    }
+    public void SetStartPosition(Vector3 pos)
+    {
+        startWorldPos = pos;
+        transform.position = pos;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
     }
 
     private void OnMouseDown()
@@ -97,9 +105,9 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
-        hasReachedGoal = false; // ★ 超重要
         transform.position = startWorldPos;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
     }
+
 }

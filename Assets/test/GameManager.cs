@@ -79,15 +79,14 @@ public class GameManager : MonoBehaviour
     public void StartNewStage(StageData stage)
     {
         hitCount = 0;
-        maxHitCount = stage.maxHitCount;
         isGameOver = false;
         isGoalReached = false;
+        maxHitCount = stage.maxHitCount;
 
         var player = FindAnyObjectByType<Player>();
         if (player != null)
         {
             player.transform.position = stage.playerStartPos;
-            player.ResetPlayer();
         }
     }
 
@@ -107,6 +106,13 @@ public class GameManager : MonoBehaviour
             SetGameOver();
             OnStageFailed?.Invoke();
         }
+    }
+    public void OnReachGoal()
+    {
+        if (isGameOver || isGoalReached) return;
+
+        isGoalReached = true;
+        OnGoalSuccess?.Invoke();
     }
 
     // ===== GameOver =====

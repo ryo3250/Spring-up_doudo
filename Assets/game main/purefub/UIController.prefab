@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3991682839678529748
+--- !u!1 &3697254719638750644
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5122356258053904184}
-  - component: {fileID: 848433730835031367}
+  - component: {fileID: 5053512938732437705}
+  - component: {fileID: 8482016615052730316}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: UIController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5122356258053904184
+--- !u!4 &5053512938732437705
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3991682839678529748}
+  m_GameObject: {fileID: 3697254719638750644}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.14913812, y: -0.21579075, z: -0.009675821}
+  m_LocalPosition: {x: 0.9206484, y: -0.42433745, z: -0.058112938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &848433730835031367
+--- !u!114 &8482016615052730316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3991682839678529748}
+  m_GameObject: {fileID: 3697254719638750644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42cdd9cf1848cfb4cb8524d34befd7de, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fc40dc2865dc674dae86c9619763ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitCount: 2
-  hitStatusText: {fileID: 0}
+  hitText: {fileID: 0}
   gameOverUI: {fileID: 0}
   goalUI: {fileID: 0}
   player: {fileID: 0}
