@@ -1,0 +1,11 @@
+diff a/Assets/material/グリーンピース.png.meta b/Assets/material/グリーンピース.png.meta	(rejected hunks)
+@@ -173,7 +173,8 @@
+     secondaryTextures: []
+     spriteCustomMetadata:
+       entries: []
+-    nameFileIdTable: {}
++    nameFileIdTable:
++      "\u30B0\u30EA\u30FC\u30F3\u30D4\u30FC\u30B9_0": -1934612526933141690
+   mipmapLimitGroupName: 
+   pSDRemoveMatte: 0
+   userData: 
