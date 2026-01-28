@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Dead_Wall
+  - Goal
   layers:
   - Default
   - TransparentFX

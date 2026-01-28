@@ -10,9 +10,16 @@ public class Player3 : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 m_velocity;        // 現在の速度
+    private Vector3 initialPosition;   //初期値を保存
     private Vector2 startPos;          // ドラッグ開始位置
     private Vector2 endPos;            // ドラッグ終了位置
     private bool isDragging = false;   // ドラッグ状態
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        initialPosition = transform.position; //最初の位置を記録
+    }
 
     void Start()
     {
@@ -29,6 +36,32 @@ public class Player3 : MonoBehaviour
             lineRenderer.startWidth = lineWidth;
             lineRenderer.endWidth = lineWidth;
             lineRenderer.enabled = false; // 最初は非表示
+        }
+
+        Initialize();
+    }
+
+    //初期化メソッド
+    public void Initialize() 
+    {
+        //位置のリセット
+        transform.position = initialPosition;
+
+        //速度のリセット
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        m_velocity = Vector2.zero;
+
+        //ドラッグ状態のリセット
+        isDragging = false;
+
+        //LineRendererの初期化
+        if (lineRenderer != null) 
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.startWidth = lineWidth;
+            lineRenderer.endWidth = lineWidth;
+            lineRenderer.enabled = false;
         }
     }
 
@@ -80,32 +113,21 @@ public class Player3 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // 反射処理
-        var inDirection = m_velocity;
-        var inNormal = other.contacts[0].normal;
+        if (test_Stage_Manager.Instance == null)
+        {
+            return;
+        }
 
-        // 反射方向を計算し、速度を更新
-        Vector2 reflectDirection = Vector2.Reflect(inDirection, inNormal).normalized;
-        m_velocity = reflectDirection * m_speed;
-
-        // Rigidbodyに反映
+        var normal = other.contacts[0].normal;
+        m_velocity = Vector2.Reflect(m_velocity, normal).normalized * m_speed;
         rb.linearVelocity = m_velocity;
 
-        // ボールが何かに当たったらバウンドとしてカウント
-        if (Game_Manager.Instance != null)
+        test_Stage_Manager.Instance.AddHitCount();
+
+        if (other.gameObject.CompareTag("Dead_Wall"))
         {
-            Game_Manager.Instance.AddHitCount();
+            test_Stage_Manager.Instance.GameOver();
         }
 
-        if (other.gameObject.CompareTag("Dead_Wall")) 
-        { 
-            Game_Manager.Instance.GameOver();
-        }
-
-        //// 壁に触れた場合、バウンド回数が足りていればゲームオーバー
-        //if (other.gameObject.CompareTag("Wall") && Game_Manager.Instance.GetHitCount() < Game_Manager.Instance.GetMaxHitCount())
-        //{
-        //    Game_Manager.Instance.GameOver();
-        //}
     }
 }
