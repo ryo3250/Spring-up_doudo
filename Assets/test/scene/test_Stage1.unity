@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1253450512}
-  maxHitCount: 6
+  maxHitCount: 3
   hitText: {fileID: 173671912}
   gameOverUI: {fileID: 2105731490}
   goalUI: {fileID: 1485165865}

@@ -6,7 +6,7 @@ public class test_Goal : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
-            test_Stage_Manager.Instance.StageClear();
+            test_Stage_Manager.Instance.TryStageClear();
         }
     }
 }
