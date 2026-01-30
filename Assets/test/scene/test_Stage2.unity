@@ -1215,6 +1215,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2290308145432422366, guid: ac75422e1dd66fd4dadc21a2b73b3371, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290308145432422366, guid: ac75422e1dd66fd4dadc21a2b73b3371, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290308145432422366, guid: ac75422e1dd66fd4dadc21a2b73b3371, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5979086249872555568, guid: ac75422e1dd66fd4dadc21a2b73b3371, type: 3}
       propertyPath: m_Name
       value: Canva_UI
@@ -1977,12 +1989,12 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 910666121}
+  - {fileID: 1663908960}
   - {fileID: 1979601728}
   - {fileID: 1575294386}
   - {fileID: 107042941}
   - {fileID: 436759429}
   - {fileID: 643934953}
-  - {fileID: 1663908960}
   - {fileID: 732462596}
   - {fileID: 1411779956}
   - {fileID: 1585736660}
