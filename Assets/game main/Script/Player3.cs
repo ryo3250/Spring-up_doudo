@@ -55,7 +55,6 @@ public class Player3 : MonoBehaviour
 
         if (arrowTransform != null)
         {
-
             arrowTransform.gameObject.SetActive(true);
             UpdateArrow();
         }
@@ -86,6 +85,11 @@ public class Player3 : MonoBehaviour
             m_velocity = dir * m_speed;
 
             canShoot = false;
+
+            if (arrowTransform != null) 
+            { 
+                arrowTransform.gameObject.SetActive(false);
+            }
         }
     }
 
