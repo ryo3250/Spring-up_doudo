@@ -8,6 +8,7 @@ public class Player3 : MonoBehaviour
 
     [SerializeField] private Transform arrowTransform;
     [SerializeField] private float arrowLength = 2f;
+    [SerializeField] private Vector3 arrowScale = new Vector3(0.4f, 0.4f, 1f);
 
     [SerializeField] private float rotateSpeed = 150f; // スクロール回転速度
 
@@ -100,7 +101,7 @@ public class Player3 : MonoBehaviour
         arrowTransform.position = transform.position;
 
         arrowTransform.rotation = Quaternion.Euler(0, 0, currentAngle - 90f);
-        arrowTransform.localScale = Vector3.one;
+        arrowTransform.localScale = arrowScale;
     }
 
     Vector2 AngleToVector(float angle) 
