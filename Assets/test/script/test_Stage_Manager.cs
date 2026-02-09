@@ -5,12 +5,15 @@ public class test_Stage_Manager : MonoBehaviour
 {
     public static test_Stage_Manager Instance;
 
+    [Header("É|Å[ÉYUI")]
+    [SerializeField] private GameObject pauseUI;
     [SerializeField] private Player3 player;
     [SerializeField] private int maxHitCount = 3;
     [SerializeField] private Text hitText;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private GameObject goalUI;
 
+    private bool isPaused = false;
     private int hitCount;
     private bool isGameOver;
 
@@ -23,7 +26,6 @@ public class test_Stage_Manager : MonoBehaviour
     {
         InitializeStage();
     }
-
     void InitializeStage()
     {
         hitCount = 0;
@@ -59,6 +61,39 @@ public class test_Stage_Manager : MonoBehaviour
         }
     }
 
+    public void TogglePause()
+    {
+        if (isGameOver) return;
+
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
+            Time.timeScale = 0f;
+            if (pauseUI) pauseUI.SetActive(true);
+        }
+        else 
+        {
+            Time.timeScale = 1f;
+            if(pauseUI) pauseUI.SetActive(false);
+        }
+    }
+
+    public void Resume() 
+    {
+        if (!isPaused) return;
+
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        if(pauseUI) pauseUI.SetActive(false);
+    }
+
+    public void PauseGoTitle() 
+    {
+        Time.timeScale = 1f;
+        test_Game_Manager.Instance.GoTitle();
+    }
     public void GameOver()
     {
         if (isGameOver) return;
@@ -105,6 +140,11 @@ public class test_Stage_Manager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            TogglePause();
+        }
+
         if (hitText)
         {
             hitText.text = hitCount + "/" + maxHitCount;
