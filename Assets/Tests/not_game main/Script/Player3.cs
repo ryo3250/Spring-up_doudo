@@ -34,6 +34,7 @@ public class Player3 : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("Update : canShoot = " + canShoot);
         if (!canShoot) return;
 
         RotateByScroll();
@@ -76,16 +77,26 @@ public class Player3 : MonoBehaviour
 
     void ShootBySpace() 
     {
-        if (!canShoot) return;
+        Debug.Log("ShootBySpaceが呼ばれた");
+        if (!canShoot) 
+        {
+            Debug.Log("canShootがfalseなので発射しません");
+            return;
+        }
+        
+
 
         if (Input.GetKeyDown(KeyCode.Space)) 
-        { 
+        {
+            Debug.Log("Spaceを検知しました");
             Vector2 dir = AngleToVector(currentAngle);
 
             rb.AddForce(dir * power, ForceMode2D.Impulse);
             m_velocity = dir * m_speed;
 
             canShoot = false;
+
+            Debug.Log("発射しました。canShoot = " + canShoot);
 
             if (arrowTransform != null) 
             { 
