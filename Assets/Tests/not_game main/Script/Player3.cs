@@ -139,7 +139,6 @@ public class Player3 : MonoBehaviour
             test_Stage_Manager.Instance.GameOver();
         }
 
-        canShoot = true;
         UpdateArrow();
     }
 }
