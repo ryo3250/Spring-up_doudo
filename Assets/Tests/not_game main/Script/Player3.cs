@@ -10,7 +10,7 @@ public class Player3 : MonoBehaviour
     [SerializeField] private float arrowLength = 2f;
     [SerializeField] private Vector3 arrowScale = new Vector3(0.4f, 0.4f, 1f);
 
-    [SerializeField] private float rotateSpeed = 150f; // スクロール回転速度
+    //[SerializeField] private float rotateSpeed = 150f; // スクロール回転速度
 
 
     private Rigidbody2D rb;
@@ -19,7 +19,7 @@ public class Player3 : MonoBehaviour
 
     private float currentAngle = 0f;
     private bool canShoot = true;
-
+    //private LineRenderer predictionLine;
 
     void Awake()
     {
@@ -37,7 +37,7 @@ public class Player3 : MonoBehaviour
         Debug.Log("Update : canShoot = " + canShoot);
         if (!canShoot) return;
 
-        RotateByScroll();
+        RotateByMouse();
         ShootBySpace();
     }
 
@@ -64,15 +64,30 @@ public class Player3 : MonoBehaviour
 
     
 
-    void RotateByScroll() 
+    void RotateByMouse() 
     {
-        float scroll = Input.mouseScrollDelta.y;
+        //float scroll = Input.mouseScrollDelta.y;
 
-        if (Mathf.Abs(scroll)> 0.01f)
-        {
-            currentAngle += scroll * rotateSpeed * Time.deltaTime;
-            UpdateArrow();
-        }
+        //if (Mathf.Abs(scroll)> 0.01f)
+        //{
+        //    currentAngle += scroll * rotateSpeed * Time.deltaTime;
+        //    UpdateArrow();
+        //}
+
+        // マウスの画面上の位置を取得
+        Vector3 mousePosition = Input.mousePosition;
+
+        // マウスの位置をワールド座標に変換
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        // ボールからマウスへの方向を計算
+        Vector2 direction = mouseWorldPosition - transform.position;
+
+        // 角度を計算
+        currentAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // 矢印を更新
+        UpdateArrow();
     }
 
     void ShootBySpace() 
